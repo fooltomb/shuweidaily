@@ -1,8 +1,12 @@
 from django.urls import path
 from . import views
 
+app_name='dailyreport'
+
 urlpatterns=[
         path('',views.index,name='index'),
-        path('<userid>/name/',views.names,name='name'),
+        
+        path('login/',views.login,name='login'),
+        path('<userid>/',views.datetime,name='detail'),
         ]
 
