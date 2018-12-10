@@ -7,6 +7,8 @@ urlpatterns=[
         path('',views.index,name='index'),
         
         path('login/',views.login,name='login'),
-        path('<userid>/',views.datetime,name='detail'),
+        path('login/changepwd/',views.changePassword,name='changepassword'),
+        path('detail/<userid>/',views.detail,name='detail'),
+        path('main/<userid>/',views.main,name='main'),
         ]
 
