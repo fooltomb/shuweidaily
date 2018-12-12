@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.hashers import make_password
@@ -18,6 +19,7 @@ class Project(models.Model):
     start_date=models.DateField(default=timezone.now)
     end_date=models.DateField()
     isWorking=models.BooleanField(default=True)
+    spend_weight=models.FloatField(default=0.0)
     reward=models.IntegerField()
     def __str__(self):
         return self.name
@@ -25,7 +27,14 @@ class Project(models.Model):
 
 class Report(models.Model):
     author=models.ForeignKey(Users,on_delete=models.CASCADE)
+
     pub_date=models.DateField()
+    project1=models.CharField(max_length=45,default="无/学习")
+    weight1=models.FloatField(default=0.0)
+    project2=models.CharField(max_length=45,default="无/学习")
+    weight2=models.FloatField(default=0.0)
+    project3=models.CharField(max_length=45,default="无/学习")
+    weight3=models.FloatField(default=0.0)
     def __str__(self):
         return str(self.pub_date)
 
@@ -35,3 +44,11 @@ class ReportToProject(models.Model):
     weight=models.FloatField(default=0.0)
     def __str__(self):
         return self.id
+
+class UserToProject(models.Model):
+    author=models.ForeignKey(Users,on_delete=models.CASCADE,default=None)
+    project=models.ForeignKey(Project,on_delete=models.CASCADE,default=None)
+    weight=models.FloatField(default=0.0)
+    def __str__(self):
+        return self.id
+
