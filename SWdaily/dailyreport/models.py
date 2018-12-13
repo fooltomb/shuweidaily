@@ -35,8 +35,9 @@ class Report(models.Model):
     weight2=models.FloatField(default=0.0)
     project3=models.CharField(max_length=45,default="无/学习")
     weight3=models.FloatField(default=0.0)
+    detail=models.TextField(max_length=140)
     def __str__(self):
-        return str(self.pub_date)
+        return str(self.author)+str(self.pub_date)
 
 class ReportToProject(models.Model):
     report=models.ForeignKey(Report,on_delete=models.CASCADE,default=None)
