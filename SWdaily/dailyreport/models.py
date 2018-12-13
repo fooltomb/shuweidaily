@@ -21,6 +21,12 @@ class Project(models.Model):
     isWorking=models.BooleanField(default=True)
     spend_weight=models.FloatField(default=0.0)
     reward=models.IntegerField()
+    def addWeight(self,w):
+        print(self.name)
+        print(w)
+        self.spend_weight+=float(w);
+        print("====")
+        print(self.spend_weight)
     def __str__(self):
         return self.name
 
@@ -43,8 +49,14 @@ class ReportToProject(models.Model):
     report=models.ForeignKey(Report,on_delete=models.CASCADE,default=None)
     project=models.ForeignKey(Project,on_delete=models.CASCADE,default=None)
     weight=models.FloatField(default=0.0)
+    def onCreate(self):
+        self.project.addWeight(self.weight)
+        self.project.save()
+    def onDelete(self):
+        self.project.addWeight(-self.weight)
+        self.project.save()
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 class UserToProject(models.Model):
     author=models.ForeignKey(Users,on_delete=models.CASCADE,default=None)
