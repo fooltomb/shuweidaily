@@ -1,0 +1,29 @@
+<h2>用户贡献查询</h2>
+
+<form action="{% url 'dailyreport:users' %}" method="post">
+	{% csrf_token %}
+	<label>用户</label><select name="user">
+		<option value=-1>全部</option>
+		{% for u in user_list %}
+		<option value={{u.id}}>{{u.name}}</option>
+		{% endfor %}
+	</select>
+	<label>起始日期</label><input type="date" name="begin_date" max={{today|date:"Y-m-d"}}>
+	<label>结束日期</label><input type="date" name="end_date" max={{today|date:"Y-m-d"}}>
+	<input type="submit" value="查询">
+</form>
+{% for user in list %}
+<table border="1">
+	<tr>
+		{% for project in user.0 %}
+		<th>{{project}}</th>
+		{% endfor %}
+	</tr>
+	<tr>
+		{% for weight in user.1 %}
+		<td>{{weight}}</td>
+		{% endfor %}
+	</tr>
+</table>
+<br>
+{% endfor %}

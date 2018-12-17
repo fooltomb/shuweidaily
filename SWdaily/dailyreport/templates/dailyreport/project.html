@@ -1,0 +1,30 @@
+<h2>项目查询</h2>
+
+<form action="{% url 'dailyreport:project' %}" method="post">
+	{% csrf_token %}
+	<label>项目</label><select name="project">
+		<option value=-1>全部</option>
+		{% for p in project_list %}
+		<option value={{p.id}}>{{p.name}}</option>
+		{% endfor %}
+	</select>
+	<label>起始日期</label><input type="date" name="begin_date" max={{today|date:"Y-m-d"}}>
+	<label>结束日期</label><input type="date" name="end_date" max={{today|date:"Y-m-d"}}>
+	<input type="submit" value="查询">
+</form>
+
+{% for project in return_list %}
+<table border="1">
+	<tr>
+		{% for user in project.0 %}
+		<th>{{user}}</th>
+		{% endfor %}
+	</tr>
+	<tr>
+		{% for weight in project.1 %}
+		<td>{{weight}}</td>
+		{% endfor %}
+	</tr>
+</table>
+<br>
+{% endfor %}

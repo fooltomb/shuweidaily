@@ -1,0 +1,60 @@
+<h1>杭州书微信息技术有限公司动画部项目管理系统</h1>
+<h2>{{user}}</h2><a href="{% url 'dailyreport:changepassword' %}">修改密码</a>
+{% if report_list %}
+<table border="1">
+	<tr>
+		<th>日期</th>
+		<th>项目1</th>
+		<th>贡献</th>
+		<th>项目2</th>
+		<th>贡献</th>
+		<th>项目3</th>
+		<th>贡献</th>
+		<th>描述</th>
+	</tr>
+	{% for report in report_list %}
+	<tr>
+		<td>{{report.pub_date}}</td>
+		<td>{{report.project1}}</td>
+		<td>{{report.weight1}}</td>
+		<td>{{report.project2}}</td>
+		<td>{{report.weight2}}</td>
+		<td>{{report.project3}}</td>
+		<td>{{report.weight3}}</td>
+		<td>{{report.detail}}</td>
+	</tr>
+	{% endfor %}
+</table>
+{% else %}
+<p>您还没有写过日报</p>
+{% endif %}
+<h2>写日报</h2>
+<form action="{% url 'dailyreport:main' %}" method="post">
+	{% csrf_token %}
+	<label>日期：</label><input type="date" name='pub_date' value={{today|date:"Y-m-d"}} max={{today|date:"Y-m-d"}}><br>
+	<label>项目1:</label><select name="project1">
+		{% for project in project_list %}
+		<option value={{project.id}}>{{project.name}}</option>
+		{% endfor %}
+	</select>
+	<label>贡献:</label><input type="number" value="0" max="1" min="0" step="0.01" name="weight1"><br>
+	<label>项目2:</label><select name="project2">
+		{% for project in project_list %}
+		<option value={{project.id}}>{{project.name}}</option>
+		{% endfor %}
+	</select>
+	<label>贡献:</label><input type="number" value="0" max="1" min="0" step="0.01" name="weight2"><br>
+	<label>项目3:</label><select name="project3">
+		{% for project in project_list %}
+		<option value={{project.id}}>{{project.name}}</option>
+		{% endfor %}
+	</select>
+	<label>贡献:</label><input type="number" value="0" max="1" min="0" step="0.01" name="weight3"><br>
+	<label>描述:</label><textarea name="detail" cols="35" row="4" placeholder="请写描述" maxlength=140></textarea><br>
+	<input type="submit" value="提交"><br>
+</form>
+
+
+<a href="{% url 'dailyreport:users' %}">用户贡献查询</a><br>
+
+<a href="{% url 'dailyreport:project' %}">项目查询</a><br>

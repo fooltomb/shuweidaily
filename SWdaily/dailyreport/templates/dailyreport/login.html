@@ -1,0 +1,9 @@
+<h1>请登陆</h1>
+{% if error_message %}<p><strong>{{error_message}}</strong></p>{% endif %}
+<form aciton="{% url 'dailyreport:login' %}" method="post">
+{% csrf_token %}
+	用户名:<input type="text" name="username"><br>
+	密码:  <input type="password" name="pwd"><br>
+	<input type="submit" value="登陆">
+</form>
+
