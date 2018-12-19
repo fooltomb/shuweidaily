@@ -58,5 +58,7 @@ class ReportToProject(models.Model):
     report=models.ForeignKey(Report,on_delete=models.CASCADE,default=None)
     project=models.ForeignKey(Project,on_delete=models.CASCADE,default=None)
     weight=models.FloatField(default=0.0)
+    author=models.ForeignKey(Users,on_delete=models.CASCADE,default=None)
+    pub_date=models.DateField()
     def __str__(self):
         return str(self.id)

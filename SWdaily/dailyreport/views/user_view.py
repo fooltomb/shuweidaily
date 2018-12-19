@@ -25,6 +25,7 @@ def searchUser(request):
             'list':rl,
             'today':timezone.now(),
             'user_list':user_list,
+            'is_super':request.session['is_super'],
             })
     if request.method=='POST':
         user_id=request.POST['user']
@@ -43,6 +44,7 @@ def searchUser(request):
             'list':return_list,
             'today':timezone.now(),
             'user_list':user_list,
+            'is_super':request.session['is_super'],
             })
 
 
@@ -68,5 +70,11 @@ def GetReturnElement(user,begin_date,end_date):
         u_project.append(key)
         u_weight.append(value)
     return [u_project,u_weight]
+
+def addUser(request):
+    if request.method=='GET':
+        return HttpResponseRedirect(reverse('dailyreport:users'))
+    if request.method=='POST':
+        return HttpResponse("ha")
 
 

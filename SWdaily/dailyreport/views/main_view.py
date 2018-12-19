@@ -54,20 +54,20 @@ def main(request):
         u2p1,c=UserToProject.objects.get_or_create(author=a,project=p1)
         u2p1.addWeight(float(pro2_weight))
         report.project2=str(p1)
-        ReportToProject.objects.create(report=report,project=p1,weight=pro2_weight)
+        ReportToProject.objects.create(report=report,project=p1,weight=pro2_weight,author=a,pub_date=pub_date)
 
         p1=Project.objects.get(id=pro1_id)
         u2p1,c=UserToProject.objects.get_or_create(author=a,project=p1)
         u2p1.addWeight(float(pro1_weight))
         report.project1=str(p1)
-        ReportToProject.objects.create(report=report,project=p1,weight=pro1_weight)
+        ReportToProject.objects.create(report=report,project=p1,weight=pro1_weight,author=a,pub_date=pub_date)
 
         p1=Project.objects.get(id=pro3_id)
         u2p1,c=UserToProject.objects.get_or_create(author=a,project=p1)
         u2p1.addWeight(float(pro3_weight))
         report.project3=str(p1)
 
-        ReportToProject.objects.create(report=report,project=p1,weight=pro3_weight)
+        ReportToProject.objects.create(report=report,project=p1,weight=pro3_weight,author=a,pub_date=pub_date)
         report.detail=detail
         report.weight1=pro1_weight
         report.weight2=pro2_weight

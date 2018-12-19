@@ -1,3 +1,4 @@
+# -*- coding:utf:8 -*-
 from django.shortcuts import render,get_object_or_404
 from dailyreport.models import Users
 from django.contrib.auth.hashers import check_password
@@ -22,6 +23,7 @@ def login(request):
                 request.session['is_login']=True
                 request.session['user_id']=login_user.id
                 request.session['user_name']=login_user.name
+                request.session['is_super']=login_user.superuser
                 if password=="123456":
                     return render(request,'dailyreport/changepassword.html',{
                         'error_message':login_user.name,})

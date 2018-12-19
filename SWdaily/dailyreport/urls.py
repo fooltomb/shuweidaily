@@ -13,5 +13,6 @@ urlpatterns=[
         path('main/',main_view.main,name='main'),
         path('project/',project_view.searchProject,name='project'),
         path('user/',user_view.searchUser,name='users'),
+        path('adduser/',user_view.addUser,name='adduser'),
         ]
 

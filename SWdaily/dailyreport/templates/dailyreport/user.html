@@ -1,3 +1,8 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
 <h2>用户贡献查询</h2>
 
 <form action="{% url 'dailyreport:users' %}" method="post">
@@ -27,3 +32,9 @@
 </table>
 <br>
 {% endfor %}
+{% if is_super %}
+<p>oooo</p>
+{% endif %}
+</body>
+</html>
+
