@@ -33,8 +33,39 @@
 <br>
 {% endfor %}
 {% if is_super %}
-<p>oooo</p>
+<p>你好，管理员</p>
+<form id="add" action="{% url 'dailyreport:adduser' %}" method="post">
+	{% csrf_token %}
+	<select name="user">
+		{% for u in user_list %}
+		<option value={{u.id}}>{{u.name}}</option>
+		{% endfor %}
+	</select>
+	<input type="button" value="重制密码" onclick='Adduser("reset")' >
+	<input type="button" value="设为离职" onclick='Adduser("unactive")' >
+	<br><br>
+	<input type="hidden" name="option" >
+	<input type="text" name="newuser">
+	<input type="button" value="新员工" onclick='Adduser("addnew")' >
+</form>
 {% endif %}
+<script>
+function Adduser(hiddentext)
+{
+	
+	var f=document.forms["add"];
+	if (hiddentext=="addnew")
+	{
+		if (f["newuser"].value=="" || f["newuser"].value==null)
+		{	
+			alert("新员工姓名不能为空");
+			return;
+		}
+	}
+	f["option"].value=hiddentext;
+	f.submit();
+}
+</script>
 </body>
 </html>
 

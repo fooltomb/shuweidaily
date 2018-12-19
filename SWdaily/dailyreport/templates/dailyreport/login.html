@@ -1,9 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>登陆</title>
+	<meta charset="utf-8">
+	<script>
+		function validForm()
+		{
+			var f=document.forms["login"];
+			var name=f["username"].value;
+			var pwd=f["pwd"].value;
+			if(name==null || name=="" || pwd==null ||pwd=="")
+			{
+				alert("用户名或密码不能为空");
+				return false;
+			}
+		}
+	</script>
+</head>
+<body>
 <h1>请登陆</h1>
 {% if error_message %}<p><strong>{{error_message}}</strong></p>{% endif %}
-<form aciton="{% url 'dailyreport:login' %}" method="post">
+<form name="login" aciton="{% url 'dailyreport:login' %}" onsubmit="return validForm()"  method="post">
 {% csrf_token %}
 	用户名:<input type="text" name="username"><br>
 	密码:  <input type="password" name="pwd"><br>
 	<input type="submit" value="登陆">
 </form>
-
+</body>
+</html>
