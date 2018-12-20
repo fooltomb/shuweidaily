@@ -1,6 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<title>项目</title>
+	<meta charset="utf-8">
+	<script>
+		function ChangeProject()
+		{
+			var f=document.forms['addproject'];
+			var pro_id=f['project'].value;
+			var list={{p_list|safe}};
+			for (pro in list)
+			{
+				if(list[pro][0]==pro_id)
+				{
+					f['projectname'].value=list[pro][1];
+					f['projectdetail'].value=list[pro][2];
+					f['begin_date'].value=list[pro][3];
+					f['end_date'].value=list[pro][4];
+					if(list[pro][5])
+					{
+						f['isworking'][0].checked=true;
+					}
+					else
+					{
+						f['isworking'][1].checked=true;
+					}
+					f['reward'].value=list[pro][6];
+
+				}
+			}
+		}
+		function CheckAddProject()
+		{
+			var f=document.forms['addproject'];
+			if(f['projectname'].value==null || f['projectname'].value=="")
+			{
+				alert("项目名称不能为空");
+				return false;
+			}
+			if(f['begin_date'].value==null || f['begin_date'].value=="" || f['end_date'].value==null || f['end_date'].value=="")
+			{
+				alert("请填写项目起止日期");
+				return false;
+			}
+			if(f['reward']==null || f['reward']=="")
+			{
+				alert("请填写项目提成");
+				return false;
+			}
+		}
+	</script>
 </head>
 <body>
 <h2>项目查询</h2>
@@ -33,5 +82,28 @@
 </table>
 <br>
 {% endfor %}
+{% if is_super %}
+<h2>你好，管理员</h2>
+<p>添加新项目/修改旧项目</p>
+<form onsubmit="return CheckAddProject()" name="addproject" action="{% url 'dailyreport:addproject' %}" method="post">
+	{% csrf_token %}
+	<label>项目名称</label><select name="project" onchange="ChangeProject()">
+		<option value=-1>新项目</option>
+		{% for p in project_list %}
+		<option value={{p.id}}>{{p.name}}</option>
+		{% endfor %}
+	</select>
+	<input type="text" name="projectname"><br>
+	<label>项目描述</label><textarea name="projectdetail" cols="35" row="5" maxlength="250"></textarea><br>
+	<label>启动日期</label><input type="date" name="begin_date"><br>
+	<label>完结日期</label><input type="date" name="end_date"><br>
+	<p>可贡献否？员工在日报里</p>
+	<p><input type="radio" name="isworking" value="1" checked >可贡献</p>
+	<p><input type="radio" name="isworking" value="0" >不可贡献</p>
+	<label>提成</label><input type="number" name="reward" min=0 >
+	<br>
+	<input type="submit" value="提交">
+</form>
+{% endif %}
 </body>
 </html>

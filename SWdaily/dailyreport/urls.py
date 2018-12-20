@@ -6,13 +6,14 @@ from dailyreport.views import index_view,login_view,changepassword_view,main_vie
 app_name='dailyreport'
 
 urlpatterns=[
-        path('',index_view.index,name='index'),
+        path(r'',index_view.index,name='index'),
                
-        path('login/',login_view.login,name='login'),
+        path(r'login/',login_view.login,name='login'),
         path('login/changepwd/',changepassword_view.changePassword,name='changepassword'),
         path('main/',main_view.main,name='main'),
         path('project/',project_view.searchProject,name='project'),
         path('user/',user_view.searchUser,name='users'),
         path('adduser/',user_view.addUser,name='adduser'),
+        path('addproject/',project_view.AddProject,name='addproject'),
         ]
 

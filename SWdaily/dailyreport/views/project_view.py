@@ -4,13 +4,18 @@ from django.urls import reverse
 from dailyreport.models import Users,Project,Report,UserToProject,ReportToProject
 from django.shortcuts import render,get_object_or_404
 from django.utils import timezone
-
+import json
 
 def searchProject(request):
     if not request.session['is_login']:
         return HttpResponseRedirect(reverse('dailyreport:login'))
+
+    project_list=Project.objects.all()
+    p_list=[]
+    for pro in project_list:
+        p_list.append([pro.id,pro.name,pro.detail,str(pro.start_date),str(pro.end_date),pro.isWorking,pro.reward])
+
     if request.method=='GET':
-        project_list=Project.objects.all()
         return_list=[]
         for p in project_list:
             p_user=[""]
@@ -24,13 +29,14 @@ def searchProject(request):
             'return_list':return_list,
             'today':timezone.now(),
             'project_list':project_list,
+            'is_super':request.session['is_super'],
+            'p_list':json.dumps(p_list),
             })
 
     if request.method=='POST':
         project_id=request.POST['project']
         begin_date=request.POST['begin_date']
         end_date=request.POST['end_date']
-        project_list=Project.objects.all()
         temp=[]
         if project_id=="-1":
             temp=project_list
@@ -45,9 +51,15 @@ def searchProject(request):
             'return_list':return_list,
             'today':timezone.now(),
             'project_list':project_list,
+            'is_super':request.session['is_super'],
+            'p_list':json.dumps(p_list),
             })
 
 def GetReturnElement(project,begin_date,end_date):
+    if begin_date=="":
+        begin_date="2015-05-24"
+    if end_date=="":
+        end_date=timezone.now()
     r2p_list=ReportToProject.objects.filter(project=project,pub_date__gte=begin_date,pub_date__lte=end_date)
     user_dict={}
     for r2p in r2p_list:
@@ -64,6 +76,40 @@ def GetReturnElement(project,begin_date,end_date):
         p_weight.append(value)
     return [p_user,p_weight]
 
+def AddProject(request):
+    if not request.session['is_login']:
+        return HttpResponseRedirect(reverse('dailyreport:login'))
+    if request.method=='GET':
+        return HttpResponseRedirect(reverse('dailyreport:project'))
+
+    if request.method=='POST':
+        pro_id=request.POST['project']
+        pro_name=request.POST['projectname']
+        pro_detail=request.POST['projectdetail']
+        begin_date=request.POST['begin_date']
+        end_date=request.POST['end_date']
+        pro_isWorking=request.POST['isworking']=="1"
+        pro_reward=request.POST['reward']
+        pro=""
+        if pro_id=="-1":
+            pro,created=Project.objects.get_or_create(name=pro_name)
+            if not created:
+                return HttpResponse("已存在同名项目，请修改项目名称")
+        else:
+            pro=Project.objects.get(id=pro_id)
+            pro.name=pro_name
+        pro.detail=pro_detail
+        pro.start_date=begin_date
+        pro.end_date=end_date
+        pro.isWorking=pro_isWorking
+        pro.reward=pro_reward
+        pro.save()
+        if pro_id=="-1":
+            return HttpResponse("创建项目成功")
+        else:
+            return HttpResponse("修改项目成功")
 
 
+
+        return HttpResponse("post")
 
