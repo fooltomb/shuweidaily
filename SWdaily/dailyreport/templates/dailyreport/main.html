@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>日报系统</title>
+	<meta charset="utf-8">
+</head>
+<body>
 <h1>杭州书微信息技术有限公司动画部项目管理系统</h1>
 <h2>{{user}}</h2><a href="{% url 'dailyreport:changepassword' %}">修改密码</a>
 {% if report_list %}
@@ -53,8 +60,13 @@
 	<label>描述:</label><textarea name="detail" cols="35" row="4" placeholder="请写描述" maxlength=140></textarea><br>
 	<input type="submit" value="提交"><br>
 </form>
-
+<br>
+<br>
+<a href="{% url 'dailyreport:report' %}">日报查询</a><br>
 
 <a href="{% url 'dailyreport:users' %}">用户贡献查询</a><br>
 
 <a href="{% url 'dailyreport:project' %}">项目查询</a><br>
+</body>
+</html>
+

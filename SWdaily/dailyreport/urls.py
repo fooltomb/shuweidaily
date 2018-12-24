@@ -1,6 +1,6 @@
 from django.urls import path
 #import views.index_view as index_view
-from dailyreport.views import index_view,login_view,changepassword_view,main_view,user_view,project_view
+from dailyreport.views import index_view,login_view,changepassword_view,main_view,user_view,project_view,report_view
 
 
 app_name='dailyreport'
@@ -15,5 +15,6 @@ urlpatterns=[
         path('user/',user_view.searchUser,name='users'),
         path('adduser/',user_view.addUser,name='adduser'),
         path('addproject/',project_view.AddProject,name='addproject'),
+        path(r'report/',report_view.searchReport,name='report'),
         ]
 

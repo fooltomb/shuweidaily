@@ -20,7 +20,7 @@ def searchUser(request):
             u2p_list=UserToProject.objects.filter(author=u)
             for u2p in u2p_list:
                 u_project.append(str(u2p.project))
-                u_weight.append(u2p.weight)
+                u_weight.append('%.1f'%u2p.weight)
             rl.append([u_project,u_weight])
         return render(request,'dailyreport/user.html',{
             'list':rl,
@@ -50,6 +50,10 @@ def searchUser(request):
 
 
 def GetReturnElement(user,begin_date,end_date):
+    if begin_date=="":
+        begin_date="2015-05-24"
+    if end_date=="":
+        end_date=timezone.now()
     report_list=Report.objects.filter(author=user,pub_date__gte=begin_date,pub_date__lte=end_date)
     project_dict={}
     for report in report_list:
@@ -69,7 +73,7 @@ def GetReturnElement(user,begin_date,end_date):
     u_weight=[user.name]
     for key,value in project_dict.items():
         u_project.append(key)
-        u_weight.append(value)
+        u_weight.append('%.1f'%value)
     return [u_project,u_weight]
 
 def addUser(request):
@@ -88,6 +92,7 @@ def addUser(request):
             return HttpResponse("重制"+a.name+"的密码，新密码:123456")
         elif op=="unactive":
             a.active=False
+            a.leave_date=timezone.now()
             a.save()
             return HttpResponse("已将员工"+a.name+"设置为离职")
 

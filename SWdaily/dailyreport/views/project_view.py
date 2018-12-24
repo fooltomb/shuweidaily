@@ -21,9 +21,13 @@ def searchProject(request):
             p_user=[""]
             p_weight=[p.name]
             u2p_list=UserToProject.objects.filter(project=p)
+            sumOfWeight=0
             for u2p in u2p_list:
+                sumOfWeight+=u2p.weight
                 p_user.append(str(u2p.author))
-                p_weight.append(u2p.weight)
+                p_weight.append('%.1f'%u2p.weight)
+            p_user.append("合计")
+            p_weight.append('%.1f'%sumOfWeight)
             return_list.append([p_user,p_weight])
         return render(request,'dailyreport/project.html',{
             'return_list':return_list,
@@ -62,7 +66,9 @@ def GetReturnElement(project,begin_date,end_date):
         end_date=timezone.now()
     r2p_list=ReportToProject.objects.filter(project=project,pub_date__gte=begin_date,pub_date__lte=end_date)
     user_dict={}
+    sumOfWeight=0.0
     for r2p in r2p_list:
+        sumOfWeight+=r2p.weight
         if r2p.author in user_dict:
             user_dict[r2p.author]+=r2p.weight
         else:
@@ -73,7 +79,9 @@ def GetReturnElement(project,begin_date,end_date):
     p_weight=[project.name]
     for key,value in user_dict.items():
         p_user.append(key)
-        p_weight.append(value)
+        p_weight.append('%.1f'%value)
+    p_user.append("合计")
+    p_weight.append('%.1f'%sumOfWeight)
     return [p_user,p_weight]
 
 def AddProject(request):
@@ -97,7 +105,13 @@ def AddProject(request):
                 return HttpResponse("已存在同名项目，请修改项目名称")
         else:
             pro=Project.objects.get(id=pro_id)
-            pro.name=pro_name
+            
+            if pro.name!=pro_name:
+                try:
+                    Project.objects.get(name=pro_name)
+                    return HttpResponse("已存在同名项目")
+                except:
+                    pro.name=pro_name
         pro.detail=pro_detail
         pro.start_date=begin_date
         pro.end_date=end_date
