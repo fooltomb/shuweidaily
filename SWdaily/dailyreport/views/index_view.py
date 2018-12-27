@@ -1,5 +1,5 @@
-from django.http import HttpResponse
-
+from django.http import HttpResponse,HttpResponseRedirect
+from django.urls import reverse
 def index(request):
-    return HttpResponse("index get")
+    return HttpResponseRedirect(reverse('dailyreport:main'))
 

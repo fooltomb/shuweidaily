@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>查询日报</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<form action="{% url 'dailyreport:report' %}" method="post">
+	{% csrf_token %}
+	<label>员工</label><select name="user">
+		<option value=-1>全部</option>
+		{% for u in user_list %}
+		<option value={{u.id}}>{{u.name}}</option>
+		{% endfor %}
+	</select>
+	<label>起始</label><input type="date" name="begin_date" max={{today|date:"Y-m-d"}}>
+	<label>结束</label><input type="date" name="end_date" max={{today|date:"Y-m-d"}}>
+	<input type="submit" value="查询">
+	</form>
+	{% for rp in report_list %}
+	<h2>{{rp.0}}</h2>
+	{% if rp.1 %}
+	<table border="1">
+		<tr>
+			<th>日期</th>
+			<th>项目1</th>
+			<th>贡献</th>
+			<th>项目2</th>
+			<th>贡献</th>
+			<th>项目3</th>
+			<th>贡献</th>
+			<th>描述</th>
+		</tr>
+		{% for report in rp.1 %}
+		<tr>
+			<td>{{report.pub_date}}</td>
+			<td>{{report.project1}}</td>
+			<td>{{report.weight1}}</td>
+			<td>{{report.project2}}</td>
+			<td>{{report.weight2}}</td>
+			<td>{{report.project3}}</td>
+			<td>{{report.weight3}}</td>
+			<td>{{report.detail}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+	{% else %}
+	<p>没有查询到日报</p>
+	{% endif %}
+	{% endfor %}
+</body>
+</html>
