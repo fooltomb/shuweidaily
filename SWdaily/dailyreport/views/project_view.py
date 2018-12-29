@@ -43,7 +43,9 @@ def searchProject(request):
         end_date=request.POST['end_date']
         temp=[]
         if project_id=="-1":
-            temp=project_list
+            temp=project_list.filter(isWorking=True)
+        elif project_id=="-2":
+            temp=project_list.filter(isWorking=False)
         else:
             temp=[Project.objects.get(id=project_id)]
         return_list=[]
@@ -123,7 +125,19 @@ def AddProject(request):
         else:
             return HttpResponse("修改项目成功")
 
+def DeleteProject(request):
+    if not request.session['is_login']:
+        return HttpResponseRedirect(reverse('dailyreport:login'))
+    if request.method=='GET':
+        return HttpResponseRedirect(reverse('dailyreport:project'))
+    if request.method=='POST':
+        pro_id=request.POST["project"]
+        pro=Project.objects.get(id=pro_id)
+        name=pro.name
+        ReportToProject.objects.filter(project=pro).delete()
+        UserToProject.objects.filter(project=pro).delete()
+        pro.delete()
+        return HttpResponse(name+"已被删除")
 
 
-        return HttpResponse("post")
 

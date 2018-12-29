@@ -49,22 +49,48 @@
 				return false;
 			}
 		}
+		function Searchpro(doing)
+		{
+			var f=document.forms["search"];
+			if(doing)
+			{
+				f["project"].value=f["projectdoing"].value;
+			}
+			else
+			{
+				f["project"].value=f["projectdone"].value;
+			}
+			//alert(f["project"].value);
+			f.submit();
+		}
 	</script>
 </head>
 <body>
 <h2>项目查询</h2>
 
-<form action="{% url 'dailyreport:project' %}" method="post">
+<form id="search" action="{% url 'dailyreport:project' %}" method="post">
 	{% csrf_token %}
-	<label>项目</label><select name="project">
+	<label>进行中的项目</label><select name="projectdoing">
 		<option value=-1>全部</option>
 		{% for p in project_list %}
+		{% if p.isWorking %}
 		<option value={{p.id}}>{{p.name}}</option>
+		{% endif %}
 		{% endfor %}
 	</select>
+	<label>完结的项目</label><select name="projectdone">
+		<option value=-2>全部</option>
+		{% for p in project_list %}
+		{% if not p.isWorking %}
+		<option value={{p.id}}>{{p.name}}</option>
+		{% endif %}
+		{% endfor %}
+	</select>
+	<input type="hidden" name="project">
 	<label>起始日期</label><input type="date" name="begin_date" max={{today|date:"Y-m-d"}}>
 	<label>结束日期</label><input type="date" name="end_date" max={{today|date:"Y-m-d"}}>
-	<input type="submit" value="查询">
+	<input type="button" value="查询" onclick='Searchpro(true)'>
+	<input type="button" value="查询完结项目" onclick='Searchpro(false)'>
 </form>
 
 {% for project in return_list %}
@@ -99,10 +125,20 @@
 	<label>完结日期</label><input type="date" name="end_date"><br>
 	<p>是否完结？（完结的项目，员工在日报里无法贡献）</p>
 	<p><input type="radio" name="isworking" value="1" checked >正在进行中</p>
-	<p><input type="radio" name="isworking" value="0" >已完结/放弃</p>
+	<p><input type="radio" name="isworking" value="0" >已完结</p>
 	<label>提成</label><input type="number" name="reward" min=0 >
 	<br>
 	<input type="submit" value="提交">
+</form>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<form name="delproject" action="{% url 'dailyreport:delproject' %}" method="post">
+	{% csrf_token %}
+	<label>项目名称</label><select name="project">
+		{% for p in project_list %}
+		<option value={{p.id}}>{{p.name}}</option>
+		{% endfor %}
+	</select>
+	<input type="submit" value="删除">
 </form>
 {% endif %}
 </body>

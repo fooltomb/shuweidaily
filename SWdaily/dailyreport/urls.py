@@ -15,6 +15,7 @@ urlpatterns=[
         path('user/',user_view.searchUser,name='users'),
         path('adduser/',user_view.addUser,name='adduser'),
         path('addproject/',project_view.AddProject,name='addproject'),
+        path('delproject/',project_view.DeleteProject,name='delproject'),
         path(r'report/',report_view.searchReport,name='report'),
         ]
 
