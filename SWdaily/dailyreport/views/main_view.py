@@ -1,7 +1,9 @@
 # -*- coding:utf-8 -*-
 from django.shortcuts import render,get_object_or_404
 from dailyreport.models import Users,Report,Project,UserToProject,ReportToProject
+from dailyreport.forms import WriteReportForm
 from django.http import HttpResponseRedirect,HttpResponse
+
 from django.urls import reverse
 from django.utils import timezone
 
@@ -11,10 +13,12 @@ def main(request):
             a=get_object_or_404(Users,id=request.session['user_id'])
             reportlist=Report.objects.filter(author=a).order_by('-pub_date')[:5]
             projectlist=Project.objects.filter(isWorking=True)
+            form=WriteReportForm()
             return render(request,'dailyreport/main.html',{
                 'user':a,'report_list':reportlist,
                 'project_list':projectlist,
                 'today':timezone.now(),
+                'form':form,
                 })
         else:
             return HttpResponseRedirect(reverse('dailyreport:login'))

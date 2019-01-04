@@ -8,6 +8,7 @@ app_name='dailyreport'
 urlpatterns=[
         path(r'',index_view.index,name='index'),
                
+        path(r'logout/',login_view.logout,name='logout'),
         path(r'login/',login_view.login,name='login'),
         path('login/changepwd/',changepassword_view.changePassword,name='changepassword'),
         path('main/',main_view.main,name='main'),

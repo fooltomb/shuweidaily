@@ -7,7 +7,7 @@ from django.utils import timezone
 from django.contrib.auth.hashers import make_password
 
 def searchUser(request):
-    if not request.session['is_login']:
+    if not request.session.get('is_login',False):
         return HttpResponseRedirect(reverse('dailyreport:login'))
 
     if request.method=='GET':

@@ -126,3 +126,10 @@ DATETIME_FORMAT='Y-m-d H:i:s'
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT= 'static/'
+#CSRF_COOKIE_NAME='tokenname_csrftoken'
+#CSRF_COOKIE_SECURE=False
+#CSRF_HEADER_NAME=CSRF_COOKIE_NAME
+#SESSION_COOKIE_NAME='tokenname_sessionid'
+#SESSION_COOKIE_SECURE=False
+

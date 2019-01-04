@@ -3,12 +3,40 @@
 <head>
 	<title>日报系统</title>
 	<meta charset="utf-8">
+
+	{% load static %}
+	
+	<link rel="stylesheet" type="text/css" href="{% static '/admin/css/base.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static '/admin/css/forms.css' %}">
+	
+
+	<script type="text/javascript" src="/admin/jsi18n/"></script>
+
+	<script type="text/javascript" src="/static/admin/js/vendor/jquery/jquery.js"></script>
+	<script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
+
+
+	<script type="text/javascript" src="/static/admin/js/core.js"></script>
+	<script type="text/javascript" src="{% static '/admin/js/calendar.js' %}"></script>
+	<script type="text/javascript" src="/static/admin/js/admin/DateTimeShortcuts.js"></script>
+
 </head>
 <body>
-<h1>杭州书微信息技术有限公司动画部项目管理系统</h1>
-<h2>{{user}}</h2><a href="{% url 'dailyreport:changepassword' %}">修改密码</a>
+	<div id="header">
+		<div id="branding">
+			<h1>杭州书微信息技术有限公司动画部项目管理系统</h1>
+		</div>
+		<div id="user-tools">
+			<strong>{{user}}</strong>
+			<a href="{% url 'dailyreport:changepassword' %}">修改密码</a>
+			,
+			<a href="{% url 'dailyreport:logout' %}">登出</a>
+		</div>
+	</div>
+	
+<div id="content" class="colM">
 {% if report_list %}
-<table border="1">
+<table border="2">
 	<tr>
 		<th>日期</th>
 		<th>项目1</th>
@@ -38,7 +66,12 @@
 <h2>写日报</h2>
 <form action="{% url 'dailyreport:main' %}" method="post">
 	{% csrf_token %}
-	<label>日期：</label><input type="date" name='pub_date' value={{today|date:"Y-m-d"}} max={{today|date:"Y-m-d"}}><br>
+	{{form}}
+	<!--
+	<label>日期：</label>
+	<input type="text" name="pub_date" value={{today|date:"Y-m-d"}} class="vDateField" size="10">
+	-->
+	<br>	
 	<label>项目1:</label><select name="project1">
 		{% for project in project_list %}
 		<option value={{project.id}}>{{project.name}}</option>
@@ -67,6 +100,9 @@
 <a href="{% url 'dailyreport:users' %}">用户贡献查询</a><br>
 
 <a href="{% url 'dailyreport:project' %}">项目查询</a><br>
+</div>
+
+<div id="jedatebox" class="jedatebox" style="z-index: 999; display: none; left: 50px; top: 80px;"></div>
 </body>
 </html>
 

@@ -34,3 +34,7 @@ def login(request):
                 return render(request,'dailyreport/login.html',{
                     'error_message':'密码错误',})
 
+def logout(request):
+    request.session.clear()
+    return HttpResponseRedirect(reverse('dailyreport:login'))
+

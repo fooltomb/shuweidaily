@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+		<head>
+				<meta charset="utf-8">
+				<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+				<title>jeDate带时分秒日期控件代码 - 站长素材</title>
+				{% load static %}
+				<script type="text/javascript" src="{% static 'jeDate/jedate.js' %}"></script><link type="text/css" rel="stylesheet" href="{% static 'jeDate/skin/jedate.css' %}" id="jeDateSkin">
+				
+				
+		</head>
+		<body>
+				<div style="width:100%;height:100px;">
+				<p class="datep"><input class="datainp" id="indate" type="text" placeholder="只显示年月" value="" readonly=""></p>
+				<p class="datep"><input class="datainp" id="dateinfo" type="text" placeholder="请选择" readonly=""></p>
+				<p class="datep"><input class="datainp" id="datebut" type="text" placeholder="请选择" readonly=""><input type="button" onclick="jeDate({dateCell:'#datebut',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})" value="打开"></p>
+				</div>
+				<script type="text/javascript">
+					//jeDate.skin('gray');
+					jeDate({
+						dateCell:"#indate",//isinitVal:true,
+						format:"YYYY-MM",
+						isTime:false, //isClear:false,
+						minDate:"2015-10-19 00:00:00",
+						maxDate:"2016-11-8 00:00:00"
+					})
+					jeDate({
+						dateCell:"#dateinfo",
+						format:"YYYY-MM-DD",
+						isinitVal:true,
+						isTime:false,
+						isClear:false,
+						minDate:"2014-09-19 00:00:00",
+						maxDate:"2019-01-03 23:00:00",
+						okfun:function(val){alert(val)}
+					})
+				
+					//alert("YYYY/MM".match(/\w+|d+/g).join("-"))
+				</script>
+				<!--
+				<div id="jedatebox" class="jedatebox" style="z-index: 999; display: none; left: 50px; top: 80px;"></div>
+				-->
+			
+				
+		</body>
+</html>

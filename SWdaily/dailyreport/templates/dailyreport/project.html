@@ -3,6 +3,18 @@
 <head>
 	<title>项目</title>
 	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">
+	
+	<link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css">
+	
+	
+	<script type="text/javascript" src="/admin/jsi18n/"></script>
+	<script type="text/javascript" src="/static/admin/js/vendor/jquery/jquery.js"></script>
+	<script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
+	<script type="text/javascript" src="/static/admin/js/core.js"></script>
+
+	<script type="text/javascript" src="/static/admin/js/calendar.js"></script>
+	<script type="text/javascript" src="/static/admin/js/admin/DateTimeShortcuts.js"></script>
 	<script>
 		function ChangeProject()
 		{
@@ -66,6 +78,12 @@
 	</script>
 </head>
 <body>
+	<div id="header">
+		<div id="branding">
+			<h1>杭州书微信息技术有限公司动画部项目管理系统</h1>
+		</div>
+	</div>
+	<div id="content" class="colM">
 <h2>项目查询</h2>
 
 <form id="search" action="{% url 'dailyreport:project' %}" method="post">
@@ -87,14 +105,17 @@
 		{% endfor %}
 	</select>
 	<input type="hidden" name="project">
-	<label>起始日期</label><input type="date" name="begin_date" max={{today|date:"Y-m-d"}}>
-	<label>结束日期</label><input type="date" name="end_date" max={{today|date:"Y-m-d"}}>
+	<br>
+	<label>起始日期</label><input type="text" name="begin_date" value={{today|date:"Y-m-d"}} class="vDateField" size="10">
+	<br>
+	<label>结束日期</label><input type="text" name="end_date" value={{today|date:"Y-m-d"}} class="vDateField" size="10">
+	<br>
 	<input type="button" value="查询" onclick='Searchpro(true)'>
 	<input type="button" value="查询完结项目" onclick='Searchpro(false)'>
 </form>
-
+<br><br><br>
 {% for project in return_list %}
-<table border="1">
+<table border="2">
 	<tr>
 		{% for user in project.0 %}
 		<th>{{user}}</th>
@@ -121,8 +142,8 @@
 	</select>
 	<input type="text" name="projectname"><br>
 	<label>项目描述</label><textarea name="projectdetail" cols="35" row="5" maxlength="250"></textarea><br>
-	<label>启动日期</label><input type="date" name="begin_date"><br>
-	<label>完结日期</label><input type="date" name="end_date"><br>
+	<label>启动日期</label><input type="text" name="begin_date" class="vDateField" size="10"><br>
+	<label>完结日期</label><input type="text" name="end_date" class="vDateField" size="10"><br>
 	<p>是否完结？（完结的项目，员工在日报里无法贡献）</p>
 	<p><input type="radio" name="isworking" value="1" checked >正在进行中</p>
 	<p><input type="radio" name="isworking" value="0" >已完结</p>
@@ -141,5 +162,6 @@
 	<input type="submit" value="删除">
 </form>
 {% endif %}
+</div>
 </body>
 </html>

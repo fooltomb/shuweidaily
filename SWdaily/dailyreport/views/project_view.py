@@ -7,7 +7,7 @@ from django.utils import timezone
 import json
 
 def searchProject(request):
-    if not request.session['is_login']:
+    if not request.session.get('is_login',False):
         return HttpResponseRedirect(reverse('dailyreport:login'))
 
     project_list=Project.objects.all()
@@ -129,6 +129,7 @@ def DeleteProject(request):
     if not request.session['is_login']:
         return HttpResponseRedirect(reverse('dailyreport:login'))
     if request.method=='GET':
+        return render(request,'dailyreport/testdate.html',{})
         return HttpResponseRedirect(reverse('dailyreport:project'))
     if request.method=='POST':
         pro_id=request.POST["project"]

@@ -3,6 +3,11 @@
 <head>
 	<title>登陆</title>
 	<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">
+		<link rel="stylesheet" type="text/css" href="/static/admin/css/login.css">
+			
+		
+		
 	<script>
 		function validForm()
 		{
@@ -17,14 +22,33 @@
 		}
 	</script>
 </head>
-<body>
-<h1>请登陆</h1>
-{% if error_message %}<p><strong>{{error_message}}</strong></p>{% endif %}
-<form name="login" aciton="{% url 'dailyreport:login' %}" onsubmit="return validForm()"  method="post">
-{% csrf_token %}
-	用户名:<input type="text" name="username"><br>
-	密码:  <input type="password" name="pwd"><br>
-	<input type="submit" value="登陆">
-</form>
+<body class="login" data-admin-utc-offset="28800">
+	<div id="container">
+		<div id="header">
+			<div id="branding">
+				<h1>书微动画部项目管理系统</h1>
+			</div>
+		</div>
+		<div id="content" class="colM">
+			<div id="content-main">
+
+			{% if error_message %}<p><strong>{{error_message}}</strong></p>{% endif %}
+			<form name="login" aciton="{% url 'dailyreport:login' %}" onsubmit="return validForm()"  method="post">
+			{% csrf_token %}
+			<div class="form-row">
+				<label class="required" for="id_username">用户名:</label>
+				<input type="text" name="username" id="id_username" required>
+				<label calss="required" for="id_password">密码:</label>
+				<input type="password" name="pwd" id="id_password" required>
+			</div>
+			<div class="submit-row">
+				<input type="submit" value="登陆">
+			</div>
+			</form>
+			</div>
+			<br>
+		</div>
+	</div>
+
 </body>
 </html>

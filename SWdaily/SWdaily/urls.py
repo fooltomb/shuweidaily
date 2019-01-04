@@ -16,7 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from dailyreport.views import index_view
+def i18n_javascript(request):
+    return admin.site.i18n_javascript(request)
 urlpatterns = [
+    path(r'admin/jsi18n/',i18n_javascript),
     path(r'',index_view.index),
     path(r'dr/',include('dailyreport.urls')),
     path('admin/', admin.site.urls),

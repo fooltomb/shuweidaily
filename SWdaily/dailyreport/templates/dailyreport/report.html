@@ -3,8 +3,26 @@
 <head>
 	<title>查询日报</title>
 	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">
+	
+	<link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css">
+	
+	
+	<script type="text/javascript" src="/admin/jsi18n/"></script>
+	<script type="text/javascript" src="/static/admin/js/vendor/jquery/jquery.js"></script>
+	<script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
+	<script type="text/javascript" src="/static/admin/js/core.js"></script>
+
+	<script type="text/javascript" src="/static/admin/js/calendar.js"></script>
+	<script type="text/javascript" src="/static/admin/js/admin/DateTimeShortcuts.js"></script>
 </head>
 <body>
+	<div id="header">
+		<div id="branding">
+			<h1>杭州书微信息技术有限公司动画部项目管理系统</h1>
+		</div>
+	</div>
+	<div id="content" class="colM">
 	<form action="{% url 'dailyreport:report' %}" method="post">
 	{% csrf_token %}
 	<label>员工</label><select name="user">
@@ -13,14 +31,18 @@
 		<option value={{u.id}}>{{u.name}}</option>
 		{% endfor %}
 	</select>
-	<label>起始</label><input type="date" name="begin_date" max={{today|date:"Y-m-d"}}>
-	<label>结束</label><input type="date" name="end_date" max={{today|date:"Y-m-d"}}>
+	<br>
+	<label>起始</label><input type="text" name="begin_date" value={{today|date:"Y-m-d"}} class="vDateField" size="10">   
+	<br>
+	<label>结束</label><input type="text" name="end_date" value={{today|date:"Y-m-d"}} class="vDateField" size="10">
+	<br>
+
 	<input type="submit" value="查询">
 	</form>
 	{% for rp in report_list %}
 	<h2>{{rp.0}}</h2>
 	{% if rp.1 %}
-	<table border="1">
+	<table border="2">
 		<tr>
 			<th>日期</th>
 			<th>项目1</th>
@@ -48,5 +70,6 @@
 	<p>没有查询到日报</p>
 	{% endif %}
 	{% endfor %}
+	</div>
 </body>
 </html>
