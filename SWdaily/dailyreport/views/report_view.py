@@ -7,7 +7,7 @@ from django.utils import timezone
 
 def searchReport(request):
     if not request.session.get('is_login',False):
-        return HttpResponseRedirect(reverse('dailyreport/login'))
+        return HttpResponseRedirect(reverse('dailyreport:login'))
     if request.method=='GET':
         userlist=Users.objects.filter(active=True)
         a=get_object_or_404(Users,id=request.session['user_id'])

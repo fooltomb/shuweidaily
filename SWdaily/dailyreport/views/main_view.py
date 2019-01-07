@@ -37,21 +37,24 @@ def main(request):
             return HttpResponse("三个项目贡献之和不等于1，请返回重写")
         report,created=Report.objects.get_or_create(author=a,pub_date=pub_date)
         if not created:
-            p1=Project.objects.get(name=report.project1)
-            u2p1=UserToProject.objects.get(author=a,project=p1)
-            u2p1.addWeight(-float(report.weight1))
-            if u2p1.weight<=0:
-                u2p1.delete()
-            p1=Project.objects.get(name=report.project2)
-            u2p1=UserToProject.objects.get(author=a,project=p1)
-            u2p1.addWeight(-float(report.weight2))
-            if u2p1.weight<=0:
-                u2p1.delete()
-            p1=Project.objects.get(name=report.project3)
-            u2p1=UserToProject.objects.get(author=a,project=p1)
-            u2p1.addWeight(-float(report.weight3))
-            if u2p1.weight<=0:
-                u2p1.delete()
+            if float(report.weight1)>0:
+                p1=Project.objects.get(name=report.project1)
+                u2p1=UserToProject.objects.get(author=a,project=p1)
+                u2p1.addWeight(-float(report.weight1))
+                if u2p1.weight<=0:
+                    u2p1.delete()
+            if float(report.weight2)>0:
+                p1=Project.objects.get(name=report.project2)
+                u2p1=UserToProject.objects.get(author=a,project=p1)
+                u2p1.addWeight(-float(report.weight2))
+                if u2p1.weight<=0:
+                    u2p1.delete()
+            if float(report.weight3)>0:
+                p1=Project.objects.get(name=report.project3)
+                u2p1=UserToProject.objects.get(author=a,project=p1)
+                u2p1.addWeight(-float(report.weight3))
+                if u2p1.weight<=0:
+                    u2p1.delete()
             ReportToProject.objects.filter(report=report).delete()
 
         p1=Project.objects.get(id=pro2_id)
