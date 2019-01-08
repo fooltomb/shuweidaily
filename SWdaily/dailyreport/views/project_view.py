@@ -68,13 +68,12 @@ def GetReturnElement(project,begin_date,end_date):
         end_date=timezone.now()
     r2p_list=ReportToProject.objects.filter(project=project,pub_date__gte=begin_date,pub_date__lte=end_date)
     user_dict={}
+    for r2p in r2p_list:
+        user_dict[r2p.author]=0.0
     sumOfWeight=0.0
     for r2p in r2p_list:
         sumOfWeight+=r2p.weight
-        if r2p.author in user_dict:
-            user_dict[r2p.author]+=r2p.weight
-        else:
-            user_dict[r2p.author]=r2p.weight
+        user_dict[r2p.author]+=r2p.weight
     if len(user_dict)==0:
         return None
     p_user=[""]

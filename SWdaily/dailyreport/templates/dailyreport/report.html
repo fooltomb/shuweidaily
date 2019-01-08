@@ -71,5 +71,19 @@
 	{% endif %}
 	{% endfor %}
 	</div>
+	<br><br><br>
+	{% if is_super %}
+	<p>您好，管理员</p>
+	<form id='der' method='post' action="{% url 'dailyreport:delreport' %}">
+	{% csrf_token %}
+		<label>员工</label><select name="user">
+			{% for u in user_list %}
+			<option value={{u.id}}>{{u.name}}</option>
+			{% endfor %}
+		</select>
+		<label>日期</label><input type="text" name="del_date" value={{today|date:"Y-m-d"}} class="vDateField" size="10">   
+		<input type='submit' value="删除日报">
+	</form>
+	{% endif %}
 </body>
 </html>

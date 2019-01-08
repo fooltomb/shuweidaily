@@ -18,5 +18,6 @@ urlpatterns=[
         path('addproject/',project_view.AddProject,name='addproject'),
         path('delproject/',project_view.DeleteProject,name='delproject'),
         path(r'report/',report_view.searchReport,name='report'),
+        path(r'delreport/',report_view.DeleteReport,name='delreport'),
         ]
 

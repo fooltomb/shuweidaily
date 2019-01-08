@@ -16,6 +16,7 @@ def searchReport(request):
             'report_list':[[a,reportlist]],
             'user_list':userlist,
             'today':timezone.now(),
+            'is_super':request.session['is_super'],
             })
     if request.method=='POST':
         return_list=[]
@@ -41,6 +42,41 @@ def searchReport(request):
             'report_list':return_list,
             'user_list':Users.objects.filter(active=True),
             'today':timezone.now(),
+            'is_super':request.session['is_super'],
             })
+
+def DeleteReport(request):
+    if not request.session.get('is_login',False):
+        return HttpResponseRedirect(reverse('dailyreport:login'))
+    if request.method=='GET':
+        return HttpResponseRedirect(reverse('dailyreport:report'))
+    if request.method=='POST':
+        try:
+            a=Users.objects.get(id=request.POST['user'])
+            date=request.POST['del_date']
+            report=Report.objects.get(author=a,pub_date=date)
+            if float(report.weight1)>0:
+                p1=Project.objects.get(name=report.project1)
+                u2p1=UserToProject.objects.get(author=a,project=p1)
+                u2p1.addWeight(-float(report.weight1))
+                if u2p1.weight<=0:
+                    u2p1.delete()
+            if float(report.weight2)>0:
+                p1=Project.objects.get(name=report.project2)
+                u2p1=UserToProject.objects.get(author=a,project=p1)
+                u2p1.addWeight(-float(report.weight2))
+                if u2p1.weight<=0:
+                    u2p1.delete()
+            if float(report.weight3)>0:
+                p1=Project.objects.get(name=report.project3)
+                u2p1=UserToProject.objects.get(author=a,project=p1)
+                u2p1.addWeight(-float(report.weight3))
+                if u2p1.weight<=0:
+                    u2p1.delete()
+            ReportToProject.objects.filter(report=report).delete()
+            report.delete()
+            return HttpResponse("员工"+a.name+"的"+date+"日报已被删除")
+        except:
+            return HttpResponse("无法查询到此日报，请检查输入")
 
 
