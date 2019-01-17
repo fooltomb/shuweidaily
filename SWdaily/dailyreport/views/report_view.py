@@ -13,6 +13,7 @@ def searchReport(request):
         a=get_object_or_404(Users,id=request.session['user_id'])
         reportlist=Report.objects.filter(author=a).order_by('pub_date')[:30]
         return render(request,'dailyreport/report.html',{
+            'user':a,
             'report_list':[[a,reportlist]],
             'user_list':userlist,
             'today':timezone.now(),
@@ -39,6 +40,7 @@ def searchReport(request):
             rp.append(reportlist)
 
         return render(request,'dailyreport/report.html',{
+            'user':request.session['user_name'],
             'report_list':return_list,
             'user_list':Users.objects.filter(active=True),
             'today':timezone.now(),

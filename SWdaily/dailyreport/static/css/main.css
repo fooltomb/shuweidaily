@@ -1,0 +1,30 @@
+ul.daohanglan{
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	height:40px;
+	overflow:hidden;
+	background-color:#79aec8;
+}
+li.daohanglan{
+	float:left;
+	list-style-type:none;
+	height:40px;
+	padding:0px;
+}
+li.daohanglan a{
+	display:block;
+	font-size:14px;
+	text-align:center;
+	color:white;
+	padding:10px 16px;
+	text-decoration:none;
+}
+li.daohanglan a:hover:not(.active){
+	background-color:#999;
+	color:white;
+}
+li.daohanglan a.active{
+	background-color:white;
+	color:#447e9b;
+}

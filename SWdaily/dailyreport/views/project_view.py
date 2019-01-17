@@ -30,6 +30,7 @@ def searchProject(request):
             p_weight.append('%.1f'%sumOfWeight)
             return_list.append([p_user,p_weight])
         return render(request,'dailyreport/project.html',{
+            'user':request.session['user_name'],
             'return_list':return_list,
             'today':timezone.now(),
             'project_list':project_list,
@@ -54,6 +55,7 @@ def searchProject(request):
             if element!=None:
                 return_list.append(element)
         return render(request,'dailyreport/project.html',{
+            'user':request.session['user_name'],
             'return_list':return_list,
             'today':timezone.now(),
             'project_list':project_list,

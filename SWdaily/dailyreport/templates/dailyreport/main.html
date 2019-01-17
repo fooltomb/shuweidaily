@@ -6,9 +6,9 @@
 
 	{% load static %}
 	
+	<link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static '/admin/css/base.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static '/admin/css/forms.css' %}">
-	
 
 	<script type="text/javascript" src="/admin/jsi18n/"></script>
 
@@ -34,6 +34,14 @@
 		</div>
 	</div>
 	
+<ul class="daohanglan">
+	<li class="daohanglan">
+	<a href="{% url 'dailyreport:main' %}" class="active" >写日报</a>
+	</li>
+	<li class="daohanglan"><a href="{% url 'dailyreport:report' %}">日报查询</a></li>
+	<li class="daohanglan"><a href="{% url 'dailyreport:users' %}">用户查询</a></li>
+	<li class="daohanglan"><a href="{% url 'dailyreport:project' %}">项目查询</a></li>
+</ul>
 <div id="content" class="colM">
 {% if report_list %}
 <table border="2">
@@ -95,11 +103,8 @@
 </form>
 <br>
 <br>
-<a href="{% url 'dailyreport:report' %}">日报查询</a><br>
 
-<a href="{% url 'dailyreport:users' %}">用户贡献查询</a><br>
 
-<a href="{% url 'dailyreport:project' %}">项目查询</a><br>
 </div>
 
 <div id="jedatebox" class="jedatebox" style="z-index: 999; display: none; left: 50px; top: 80px;"></div>

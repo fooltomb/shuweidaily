@@ -3,6 +3,8 @@
 <head>
 	<title>查询日报</title>
 	<meta charset="utf-8">
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
 	<link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">
 	
 	<link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css">
@@ -21,7 +23,23 @@
 		<div id="branding">
 			<h1>杭州书微信息技术有限公司动画部项目管理系统</h1>
 		</div>
+		<div id="user-tools">
+			<strong>{{user}}</strong>
+			<a href="{% url 'dailyreport:changepassword' %}">修改密码</a>
+			,
+			<a href="{% url 'dailyreport:logout' %}">登出</a>
+		</div>
+
 	</div>
+<ul class="daohanglan">
+	<li class="daohanglan">
+	<a href="{% url 'dailyreport:main' %}" >写日报</a>
+	</li>
+	<li class="daohanglan"><a href="{% url 'dailyreport:report' %}" class="active">日报查询</a></li>
+	<li class="daohanglan"><a href="{% url 'dailyreport:users' %}">用户查询</a></li>
+	<li class="daohanglan"><a href="{% url 'dailyreport:project' %}">项目查询</a></li>
+</ul>
+
 	<div id="content" class="colM">
 	<form action="{% url 'dailyreport:report' %}" method="post">
 	{% csrf_token %}

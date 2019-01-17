@@ -23,6 +23,7 @@ def searchUser(request):
                 u_weight.append('%.1f'%u2p.weight)
             rl.append([u_project,u_weight])
         return render(request,'dailyreport/user.html',{
+            'user':request.session['user_name'],
             'list':rl,
             'today':timezone.now(),
             'user_list':user_list,
@@ -42,6 +43,7 @@ def searchUser(request):
         for user in temp:
             return_list.append(GetReturnElement(user,begin_date,end_date))
         return render(request,'dailyreport/user.html',{
+            'user':request.session['user_name'],
             'list':return_list,
             'today':timezone.now(),
             'user_list':user_list,
